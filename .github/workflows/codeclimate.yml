@@ -14,8 +14,12 @@ jobs:
         with:
           go-version: '1.14'
       - name: Run coverage
-        run: go test ./... -race -coverprofile=coverage.out -covermode=atomic
+        run: 
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageCommand: go test ./... -race -coverprofile=coverage.out -covermode=atomic
+          coverageLocations: |
+            ${{github.workspace}}/coverage.out:cover
